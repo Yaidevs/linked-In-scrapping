@@ -1,0 +1,117 @@
+Replit Vibe Coding Prompt: Django LinkedIn Collector
+text
+Build a COMPLETE Django web application for LinkedIn data collection using Google Custom Search Engine.
+
+## PROJECT TYPE: DJANGO WEB APPLICATION
+
+## CORE MODULES:
+
+### 1. DJANGO SETUP & MODELS
+```python
+# models.py
+class Person(models.Model):
+    name = models.CharField(max_length=200)
+    company = models.CharField(max_length=200, blank=True)
+    linkedin_url = models.URLField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class Keyword(models.Model):
+    word = models.CharField(max_length=100)
+    category = models.CharField(max_length=100, blank=True)
+    is_active = models.BooleanField(default=True)
+
+class SearchResult(models.Model):
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    profile_content = models.TextField()
+    scraped_at = models.DateTimeField(auto_now_add=True)
+
+class Match(models.Model):
+    search_result = models.ForeignKey(SearchResult, on_delete=models.CASCADE)
+    keyword = models.ForeignKey(Keyword, on_delete=models.CASCADE)
+    context_snippet = models.TextField()
+    source_url = models.URLField()
+2. GOOGLE CSE INTEGRATION
+Create Google Custom Search Engine service
+
+Search function: f"{person_name} site:linkedin.com/in"
+
+Extract LinkedIn profile URLs from search results
+
+Handle API rate limits and pagination
+
+3. PROFILE SCRAPING
+Scrape PUBLIC LinkedIn profiles (only what Google indexes)
+
+Extract: name, headline, about section, experience
+
+Use requests + BeautifulSoup for legal scraping
+
+Implement respectful delays between requests
+
+4. KEYWORD MATCHING ENGINE
+Process 65-100 keywords against profile content
+
+Find matches and capture surrounding context
+
+Store matches with source information
+
+5. DJANGO ADMIN & VIEWS
+Admin interface to manage people/keywords
+
+Dashboard to view results and matches
+
+Export functionality to CSV/Excel
+
+Background task management
+
+TECHNICAL STACK:
+Django 4.2+
+
+PostgreSQL database
+
+requests + BeautifulSoup4 for scraping
+
+pandas for data export
+
+Google Custom Search API
+
+FILE STRUCTURE:
+text
+linkedin_collector/
+├── manage.py
+├── requirements.txt
+├── core/
+│   ├── models.py
+│   ├── views.py
+│   ├── admin.py
+│   └── management/commands/
+├── scraper/
+│   ├── google_cse.py
+│   ├── linkedin_parser.py
+│   └── keyword_matcher.py
+└── templates/
+    ├── admin/
+    └── dashboard.html
+START WITH:
+Django project setup with basic models
+
+Google CSE API integration
+
+Simple profile scraping from public URLs
+
+Basic keyword matching
+
+Django admin customization
+
+PRIORITY ORDER:
+Working Django admin for data management
+
+Google CSE search functionality
+
+Profile content extraction
+
+Keyword matching and results
+
+Export features
+
+Build this as a COMPLETE Django application, not just scripts.
